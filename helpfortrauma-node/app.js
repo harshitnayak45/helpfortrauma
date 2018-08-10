@@ -21,6 +21,10 @@ app.use((req, res, next) => {
 });
 
 /* **********************************Initializing Routes ********************************* */
-
+app.use('', (req, res, next) => {
+    res.status(201).json({
+        message: "Welcome to the app ............."
+    });
+});
 
 module.exports = app;
