@@ -21,6 +21,7 @@ app.use((req, res, next) => {
 });
 
 /* **********************************Initializing Routes ********************************* */
-
+const registerRoute = require('./api/routes/register');
+app.use('/register', registerRoute);
 
 module.exports = app;
