@@ -49,8 +49,9 @@ router.post('/user', (req, res, next) => {
             } else {
                 const user = new Register({
                     fName: req.body.fName,
-                    lName: req.body.lName,
+                    lName: req.body.lName,               
                     email: req.body.email,
+                    cell: req.body.cell,
                     profession: req.body.profession,
                     address: req.body.address,
                     address2: req.body.address2,
