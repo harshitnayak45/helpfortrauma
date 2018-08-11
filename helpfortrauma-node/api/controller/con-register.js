@@ -57,7 +57,6 @@ exports.getAllregisterUser = (req, res, next) => {
 /* ****************************Private functions**************************** */
 function _setReqData(req) {
     let hash = bcrypt.hashSync(req.body.pass, 10);
-    console.log(hash);
     const reqObj = {
         fName: req.body.fName,
         lName: req.body.lName,

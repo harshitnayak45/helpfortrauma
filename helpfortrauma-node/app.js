@@ -24,4 +24,7 @@ app.use((req, res, next) => {
 const registerRoute = require('./api/routes/register');
 app.use('/register', registerRoute);
 
+const loginRoute = require('./api/routes/login');
+app.use('/login', loginRoute);
+
 module.exports = app;
