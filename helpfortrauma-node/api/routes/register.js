@@ -6,6 +6,9 @@ const conRegister = require('../controller/con-register');
 /* ****************************Get all registered user**************************** */
 router.get('/user/all', conRegister.getAllregisterUser);
 
+/* ****************************Get all registered user**************************** */
+router.delete('/delete/all', conRegister.deleteAllregisterUser);
+
 /* *******************************User Registration************************************* */
 router.post('/user', conRegister.addUpdateUser);
 

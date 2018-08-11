@@ -37,7 +37,7 @@ exports.authenticate = (req, res, next) => {
 /* ****************************Private functions**************************** */
 function _getToken(data) {
     const tokenData = _setDataForToken(data);
-    const secret = data._id + "-" + "-" + data.email + "-" + data.fName;
+    const secret =  "JWT_TOKEN_SECRET";
     const token = jwt.sign(tokenData, secret,
         {
             expiresIn: "1h"

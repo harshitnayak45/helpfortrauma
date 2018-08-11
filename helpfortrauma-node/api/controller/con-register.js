@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 exports.addUpdateUser = (req, res, next) => {
     const reqObj = _setReqData(req);
     if (req.body._id) {
-        User.findByIdAndUpdate(req.body._id, reqObj, { new: true })
+        Register.findByIdAndUpdate(req.body._id, reqObj, { new: true })
             .then(data => {
                 res.status(201).json({
                     message: 'Data Updated successfully',
@@ -50,6 +50,16 @@ exports.getAllregisterUser = (req, res, next) => {
             message: 'all registerd users',
             success: true,
             body: users
+        });
+    });
+}
+
+/* ****************************delete all registered user**************************** */
+exports.deleteAllregisterUser = (req, res, next) => {
+    Register.remove({}, (err, users) => {
+        res.status(200).json({
+            message: 'deleted all successfully',
+            success: true,
         });
     });
 }

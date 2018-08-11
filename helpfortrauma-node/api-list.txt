@@ -1,0 +1,17 @@
+# Add and Update User Api 
+http://localhost:3300/register/user
+
+# Get All User
+http://localhost:3300/register/user/all
+
+# Delete All User
+http://localhost:3300/register/delete/all
+
+# Login Api 
+http://localhost:3300/login/authenticate
+
+# Get User By Id
+http://localhost:3300/user/<id>
+
+# Delete User By Id
+http://localhost:3300/user/delete/<id>
