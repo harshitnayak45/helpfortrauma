@@ -21,6 +21,11 @@
 .App-intro {
   font-size: large;
 }
+.table>thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

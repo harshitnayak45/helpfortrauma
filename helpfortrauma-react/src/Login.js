@@ -1,8 +1,45 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'; 
 import ReactDOM from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+} from 'react-router-dom';
+import axios from 'axios';
+import AuthService from './AuthService';
+import withAuth from './withAuth';
+
+const Auth = new AuthService();
+const Url='http://localhost:3300';
 class Login extends Component {
- 
- 
+
+  constructor(props){
+    super(props);
+    this.state={
+    	username:'',
+    	password:''
+    };
+    this.LoginMe=this.LoginMe.bind(this);
+  }
+
+  componentWillMount() {
+   if(Auth.loggedIn())
+   this.props.history.replace('/Home');
+  
+  }
+   
+  LoginMe(){
+   // e.preventDefault();
+        Auth.login(this.refs.email.value,this.refs.pass.value)
+            .then(res =>{
+              console.log(res);
+               this.props.history.replace('/Home');
+            })
+            .catch(err =>{
+                alert(err);
+            })
+  }
   render() {
     return (
       <div>
@@ -25,20 +62,20 @@ class Login extends Component {
       <form className="form account-form" method="POST" action="./index.html">
 
         <div className="form-group">
-          <label for="login-username" className="placeholder-hidden">Username</label>
-          <input type="text" className="form-control" id="login-username" placeholder="Username" tabindex="1" />
+          <label htmlFor="login-username" className="placeholder-hidden">Username</label>
+          <input type="text" className="form-control" id="email" ref="email" placeholder="Email" tabIndex="1" />
 
         </div>
 
         <div className="form-group">
-          <label for="login-password" className="placeholder-hidden">Password</label>
-          <input type="password" className="form-control" id="login-password" placeholder="Password" tabindex="2" />
+          <label htmlFor="login-password" className="placeholder-hidden">Password</label>
+          <input type="password" className="form-control" id="pass" ref="pass" placeholder="Password" tabIndex="2" />
         </div> 
 
         <div className="form-group clearfix">
           <div className="pull-left">         
             <label className="checkbox-inline">
-            <input type="checkbox" className="" value="" tabindex="3" />Remember me
+            <input type="checkbox" className="" value="" tabIndex="3" />Remember me
             </label>
           </div>
 
@@ -48,7 +85,7 @@ class Login extends Component {
         </div> 
 
         <div className="form-group">
-          <button type="submit" className="btn btn-primary btn-block btn-lg" tabindex="4">
+          <button type="button" onClick={this.LoginMe} className="btn btn-primary btn-block btn-lg" tabIndex="4">
             Signin &nbsp; <i className="fa fa-play-circle"></i>
           </button>
         </div> 
@@ -61,7 +98,8 @@ class Login extends Component {
     <div className="account-footer">
       <p>
       Don't have an account? &nbsp;
-      <a href="./account-signup.html" className="">Create an Account!</a>
+     
+      <Link to={'/'}> Create an Account!</Link>
       </p>
     </div> 
 

@@ -5,11 +5,24 @@ import {
   Switch,
   Link,
 } from 'react-router-dom';
+
 import Register from './Register';
 import Login from './Login';
+import RegisterUser from './RegisterUser';
+import Home from './Home';
+import AuthService from './AuthService';
+import withAuth from './withAuth';
+const Auth = new AuthService();
+
+
+
 
 class Intro extends Component {
+ 
   render() {
+
+   
+  
   
     return (
       <div>
@@ -27,11 +40,9 @@ class Intro extends Component {
 
       <ul className="nav navbar-nav mainbar-nav">
 
-        <li className="active">
-          <a href="./index.html">
-            <i className="fa fa-dashboard"></i>
-            Dashboard
-          </a>
+        <li>
+        <Link to={'/Home'}>  <i className="fa fa-dashboard"></i>Home</Link>
+         
         </li>
 
         <li className="dropdown ">
@@ -209,6 +220,7 @@ class Intro extends Component {
                 <Link to={'/login'}> <i className="fa fa-unlock"></i> Login</Link>
                  
                 </li>
+               
 
                 <li>
                   <a href="./account-login-social.html">
@@ -217,9 +229,9 @@ class Intro extends Component {
                   </a>
                 </li>
 
-                <li>
+                {/* <li>
                 <Link to={'/'}>  <i className="fa fa-star"></i>Sing Up</Link>
-                  </li>
+                  </li> */}
 
                 <li>
                   <a href="./account-forgot.html">
@@ -233,10 +245,10 @@ class Intro extends Component {
             <li className="divider"></li>
 
             <li>
-              <a href="./page-blank.html">
-              <i className="fa fa-square-o"></i> 
-              &nbsp;&nbsp;Blank Page
-              </a>
+             
+               <Link to={'/RegisterUser'}> <i className="fa fa-square-o"></i> Register User</Link>
+             
+             
             </li> 
 
           </ul>
@@ -261,6 +273,8 @@ class Intro extends Component {
                <Switch>
                   <Route exact path='/' component={Register} />
                   <Route exact path='/login' component={Login} />
+                   <Route exact path='/RegisterUser' component={RegisterUser} />
+                   <Route exact path='/Home' component={Home} />
                </Switch>
              
 

@@ -5,7 +5,12 @@ import Intro from './Intro';
 import DashboardMenu from './DashboardMenu';
 import Footer from './Footer';
 
+
 import registerServiceWorker from './registerServiceWorker';
+import AuthService from './AuthService';
+import withAuth from './withAuth';
+const Auth = new AuthService();
+
 
 
 class App extends Component {
@@ -21,13 +26,15 @@ class App extends Component {
 }
 
 
-class Number extends Component {
+class Number extends Component { 
   componentDidMount(){
     console.log("component did mount here");
 
   }
   componentWillMount(){
-    console.log("component Will mount here");
+    console.log("component didqq mount here");
+    if(!Auth.loggedIn())
+    this.props.history.replace('/login');
   }
   componentWillReceiveProps(newProps){
     console.log("component Will Receive props here");
