@@ -1,3 +1,3 @@
 module.exports = {
-    url: 'mongodb+srv://admin:root123@users-eysz3.mongodb.net/test?retryWrites=true'
+    url: 'mongodb+srv://admin:root123@users-eysz3.mongodb.net/helpfortrauma-db?retryWrites=true'
 }

@@ -56,9 +56,11 @@ exports.getAllregisterUser = (req, res, next) => {
 /* ****************************delete all registered user**************************** */
 exports.deleteAllregisterUser = (req, res, next) => {
     Register.remove({}, (err, users) => {
-        res.status(200).json({
-            message: 'deleted all successfully',
-            success: true,
+        Password.remove({}, (err, pass) => {
+            res.status(200).json({
+                message: 'deleted all successfully',
+                success: true,
+            });
         });
     });
 }
