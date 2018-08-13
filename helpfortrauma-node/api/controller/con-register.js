@@ -1,4 +1,5 @@
 const Register = require('../model/user-info.vo');
+const Password = require('../model/user-pass.vo');
 const bcrypt = require('bcrypt');
 
 /* *******************************User Registration************************************* */
@@ -27,10 +28,8 @@ exports.addUpdateUser = (req, res, next) => {
                     const user = new Register(reqObj);
                     user.save()
                         .then(data => {
-                            res.status(201).json({
-                                message: 'Data added successfully',
-                                success: true
-                            });
+                            const reqPass = _setPass(req, user);
+                            _savePass(reqPass, res);
                         }).catch(err => {
                             console.log(err);
                         });
@@ -66,7 +65,6 @@ exports.deleteAllregisterUser = (req, res, next) => {
 
 /* ****************************Private functions**************************** */
 function _setReqData(req) {
-    let hash = bcrypt.hashSync(req.body.pass, 10);
     const reqObj = {
         fName: req.body.fName,
         lName: req.body.lName,
@@ -79,8 +77,30 @@ function _setReqData(req) {
         state: req.body.state,
         zip: req.body.zip,
         username: req.body.username,
-        pass: hash,
         created: new Date()
     }
     return reqObj;
+}
+
+function _setPass(req, user) {
+    let hash = bcrypt.hashSync(req.body.pass, 10);
+    const reqObj = {
+        pass: hash,
+        usrId: user._id,
+        created: new Date()
+    }
+    return reqObj;
+}
+
+function _savePass(reqPass, res) {
+    const pass = new Password(reqPass);
+    pass.save()
+        .then(data => {
+            res.status(201).json({
+                message: 'Data added successfully',
+                success: true
+            });
+        }).catch(err => {
+            console.log(err);
+        });
 }

@@ -1,4 +1,5 @@
 const Register = require('../model/user-info.vo');
+const Password = require('../model/user-pass.vo');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -8,20 +9,27 @@ exports.authenticate = (req, res, next) => {
     Register.findOne({ email: req.body.email })
         .then(data => {
             if (data) {
-                let isPassMatch = bcrypt.compareSync(req.body.pass, data.pass);
-                if (isPassMatch) {
-                    const token = _getToken(data);
-                    res.status(201).json({
-                        message: "Login successful",
-                        success: true,
-                        body: token
+                Password.findOne({ usrId: data._id })
+                    .then(passData => {
+                        console.log('xxxxxxx xxxxxxxx xxxxxxx xxxxx pass data is ', passData);
+                        let isPassMatch = bcrypt.compareSync(req.body.pass, passData.pass);
+                        if (isPassMatch) {
+                            const token = _getToken(data);
+                            res.status(201).json({
+                                message: "Login successful",
+                                success: true,
+                                body: token
+                            });
+                        } else {
+                            res.status(400).json({
+                                message: "Wrong username or password",
+                                success: false
+                            });
+                        }
+                    }).catch(err => {
+                        console.log(err);
                     });
-                } else {
-                    res.status(400).json({
-                        message: "Wrong username or password",
-                        success: false
-                    });
-                }
+
             } else {
                 res.status(400).json({
                     message: "Wrong username or password",
@@ -37,7 +45,7 @@ exports.authenticate = (req, res, next) => {
 /* ****************************Private functions**************************** */
 function _getToken(data) {
     const tokenData = _setDataForToken(data);
-    const secret =  "JWT_TOKEN_SECRET";
+    const secret = "JWT_TOKEN_SECRET";
     const token = jwt.sign(tokenData, secret,
         {
             expiresIn: "1h"
@@ -59,4 +67,14 @@ function _setDataForToken(data) {
         username: data.username,
     }
     return tokenData;
+}
+
+function _getPass(usrId) {
+    Password.findOne({ usrId: usrId })
+        .then(data => {
+            console.log('pass', data);
+            return data;
+        }).catch(err => {
+            console.log(err);
+        });
 }
