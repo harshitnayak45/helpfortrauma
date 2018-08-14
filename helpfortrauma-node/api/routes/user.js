@@ -35,10 +35,15 @@ const fileFilter = (req, file, cb) => {
 router.delete('/delete/:_id', checkAuth, conUser.deleteUser);
 
 /* ****************************Delete User by Id**************************** */
-router.get('/:_id', checkAuth, conUser.getUserById);
+router.get('/profile/:_id', checkAuth, conUser.getUserById);
 
 /* ****************************User Image Upload**************************** */
 router.post('/image', checkAuth, upload.single('userImage'), conUser.uploadUserImage);
+
+/* ****************************User Image download**************************** */
+router.get('/image', checkAuth, conUser.downloadUserImage);
+   
+
 
 
 

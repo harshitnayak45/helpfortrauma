@@ -1,5 +1,5 @@
 const Register = require('../model/user-info.vo');
-
+const fs = require('fs');
 /* ****************************Delete User by Id**************************** */
 exports.deleteUser = (req, res, next) => {
     console.log("xxxxxxxxxxxxxxxxxxx xxxxxxxx delete init " + req.params._id);
@@ -45,9 +45,37 @@ exports.getUserById = (req, res, next) => {
 /* ****************************Upload User Image**************************** */
 exports.uploadUserImage = (req, res, next) => {
     res.send({
-        message: 'success'
-    })
+        message: 'uploaded succesfully',
+        success: false,
+        body: {}
+    });
 }
 
+/* ****************************Upload User Image**************************** */
+exports.downloadUserImage = (req, res, next) => {
+    const path = 'storage/uploads/user-images/';
+    let message; let success; let body;
+    fs.readdir(path, (err, files) => {
+        files.forEach(file => {
+            if (file == req.userData._id + '.jpeg') {
+                message = "successful";
+                body = file;
+                success = true;
+
+            } else {
+                message = "Not found";
+                body = {};
+                success = false;
+            }
+
+        });
+        res.status(201).json({
+            message: message,
+            success: success,
+            body: body
+        });
+    });
+
+}
 
 /* ****************************Private functions**************************** */

@@ -20,6 +20,8 @@ app.use((req, res, next) => {
 	next();
 });
 
+app.use(express.static(__dirname + '/storage/uploads/user-images'));
+
 /* **********************************Initializing Routes ********************************* */
 const registerRoute = require('./api/routes/register');
 app.use('/register', registerRoute);
