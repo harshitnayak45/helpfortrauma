@@ -51,7 +51,7 @@ exports.uploadUserImage = (req, res, next) => {
     });
 }
 
-/* ****************************Upload User Image**************************** */
+/* ****************************Download User Image**************************** */
 exports.downloadUserImage = (req, res, next) => {
     const path = 'storage/uploads/user-images/';
     let message; let success; let body;
