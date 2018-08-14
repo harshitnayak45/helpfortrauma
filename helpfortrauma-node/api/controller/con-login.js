@@ -11,7 +11,6 @@ exports.authenticate = (req, res, next) => {
             if (data) {
                 Password.findOne({ usrId: data._id })
                     .then(passData => {
-                        console.log('xxxxxxx xxxxxxxx xxxxxxx xxxxx pass data is ', passData);
                         let isPassMatch = bcrypt.compareSync(req.body.pass, passData.pass);
                         if (isPassMatch) {
                             const token = _getToken(data);
@@ -68,13 +67,18 @@ function _setDataForToken(data) {
     }
     return tokenData;
 }
-
+/**
+ * Make promises in node (Not called anywhere) 
+ */
 function _getPass(usrId) {
-    Password.findOne({ usrId: usrId })
-        .then(data => {
-            console.log('pass', data);
-            return data;
-        }).catch(err => {
-            console.log(err);
-        });
+    return new Promise((resolve, reject) => {
+        Password.findOne({ usrId: usrId })
+            .then(data => {
+                console.log('pass', data);
+                resolve(data);
+            }).catch(err => {
+                reject(err);
+            });
+    });
+
 }

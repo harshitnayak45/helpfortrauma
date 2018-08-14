@@ -42,4 +42,12 @@ exports.getUserById = (req, res, next) => {
         });
 }
 
+/* ****************************Upload User Image**************************** */
+exports.uploadUserImage = (req, res, next) => {
+    res.send({
+        message: 'success'
+    })
+}
+
+
 /* ****************************Private functions**************************** */
