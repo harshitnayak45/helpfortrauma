@@ -67,7 +67,6 @@ exports.downloadUserImage = (req, res, next) => {
                 body = {};
                 success = false;
             }
-
         });
         res.status(201).json({
             message: message,

@@ -1,25 +1,40 @@
 # Add and Update User Api 
 response: boolean
+method: post
 http://localhost:3300/register/user
 
 # Get All User
 response: Array<UserInfoVo>
+method: get
 http://localhost:3300/register/user/all
 
 # Delete All User
 response: boolean
+method: delete
 http://localhost:3300/register/delete/all
 
 # Login Api 
 response: string(token)
+method: post
 http://localhost:3300/login/authenticate
 
 # Get User By Id
 params: _id
+method: get
 response: UserInfoVo
 http://localhost:3300/user/<id>
 
 # Delete User By Id
 params: _id
+method: delete
 response: boolean
 http://localhost:3300/user/delete/<id>
+
+# Upload User Image 
+method: post
+http://localhost:3300/user/image
+
+# Download User Image 
+method: get
+response: string
+http://localhost:3300/user/image
