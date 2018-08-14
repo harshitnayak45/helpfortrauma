@@ -1,4 +1,4 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';  
 import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
@@ -28,16 +28,82 @@ class Register extends Component {
     	state:'',
     	zip:'',
     	username:'',
-    	pass:''
+    	pass:'',
+      message: '',
+      fields: {},
+      errors: {}
     };
     this.RegisterMe=this.RegisterMe.bind(this);
   }
+
+  handleValidation(){
+        let fields = this.state.fields;
+        let errors = {};
+        let formIsValid = true;
+
+       
+        //Email
+        if(!fields["email"]){
+           formIsValid = false;
+           errors["email"] = "Cannot be empty";
+        }
+
+        if(typeof fields["email"] !== "undefined"){
+           let lastAtPos = fields["email"].lastIndexOf('@');
+           let lastDotPos = fields["email"].lastIndexOf('.');
+
+           if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["email"].length - lastDotPos) > 2)) {
+              formIsValid = false;
+              errors["email"] = "Email is not valid";
+            }
+       }  
+
+         if(!fields["fName"]){
+           formIsValid = false;
+           errors["fName"] = "Cannot be empty firstname";
+        }
+         if(!fields["lName"]){
+           formIsValid = false;
+           errors["lName"] = "Cannot be empty lastname";
+        }
+         if(!fields["cell"]){
+           formIsValid = false;
+           errors["cell"] = "Cannot be empty mobile";
+        }
+        if(!fields["username"]){
+           formIsValid = false;
+           errors["username"] = "Cannot be empty username";
+        }
+        if(!fields["pass"]){
+           formIsValid = false;
+           errors["pass"] = "Cannot be empty password";
+        }
+
+       
+
+
+       this.setState({errors: errors});
+       return formIsValid;
+   }
   
   componentDidMount() {
    
   }
 
-  RegisterMe(event){
+  RegisterMe(e){
+    e.preventDefault();
+
+    if(this.handleValidation()){
+               this.setState({ message: 'Form submitted' });
+                this.props.history.push("/login")
+          
+        }else{
+           this.setState({ message: 'Form has errors' });
+
+
+          
+        }
+  
 
 	 const userInfoVo = {  
 	 	_id:'',
@@ -58,15 +124,23 @@ class Register extends Component {
 
     axios.post(Url+'/register/user', userInfoVo)
       .then((result) => {
-        this.props.history.push("/")
-      }); 
+       
+      }).catch(err =>{
+                alert(err);
+            }); 
 
-    console.log(userInfoVo);
-	
+    //console.log(userInfoVo);
+
+     
      
 
 
   }
+   handleChange(field, e){  
+        let fields = this.state.fields;
+        fields[field] = e.target.value;        
+        this.setState({fields});
+    }
  
   render() {
     return (
@@ -82,7 +156,7 @@ class Register extends Component {
   <div className="account-logo">
     <img src="./img/logo-login.png" alt="Target Admin" />
   </div>
-
+ <div className="result">{ this.state.message }</div>
 
     <div className="account-body">
 
@@ -93,29 +167,34 @@ class Register extends Component {
       <form className="form account-form"  action="#">
       	 <div className="form-group">
           <label htmlFor="fName" className="placeholder-hidden">Your Firstname</label>
-          <input type="text" className="form-control" id="fName" ref="fName" placeholder="Your FirstName" tabIndex="1" />
+          <input type="text" className="form-control" id="fName" ref="fName" placeholder="Your FirstName" name="fName" onChange={this.handleChange.bind(this, "fName")} value={this.state.fields["fName"]} tabIndex="1" />
+           <span style={{color: "red"}}>{this.state.errors["fName"]}</span>
         </div>
         <div className="form-group">
           <label htmlFor="lName" className="placeholder-hidden">Your Lastname</label>
-          <input type="text" className="form-control" id="lName" ref="lName" placeholder="Your LastName" tabIndex="2" />
+          <input type="text" className="form-control" id="lName" ref="lName" placeholder="Your LastName" name="lName" onChange={this.handleChange.bind(this, "lName")} value={this.state.fields["lName"]} tabIndex="2" />
+          <span style={{color: "red"}}>{this.state.errors["lName"]}</span>
         </div> 
 
         <div className="form-group">
           <label htmlFor="email" className="placeholder-hidden">Email Address</label>
-          <input type="text" className="form-control" id="email" placeholder="Your Email" ref="email" tabIndex="3" />
+          <input type="text" className="form-control" id="email" placeholder="Your Email" ref="email" name="email" onChange={this.handleChange.bind(this, "email")} value={this.state.fields["email"]} tabIndex="3" />
+         <span style={{color: "red"}}>{this.state.errors["email"]}</span>
         </div> 
 
         <div className="form-group">
           <label htmlFor="cell" className="placeholder-hidden">Your PhoneNumber</label>
-          <input type="text" className="form-control" id="cell" ref="cell" placeholder="Your PhoneNumber" tabIndex="4" />
+          <input type="text" className="form-control" id="cell" ref="cell" placeholder="Your PhoneNumber" name="cell" onChange={this.handleChange.bind(this, "cell")} value={this.state.fields["cell"]} tabIndex="4" />
+          <span style={{color: "red"}}>{this.state.errors["cell"]}</span>
         </div>
 
         <div className="form-group">
           <label htmlFor="Profession" className="placeholder-hidden">Your Profession</label>
           <select className="form-control" id="profession" ref="profession" tabIndex="5">
-          	<option value="1">Option 1</option>
-          	<option value="2">Option 2</option>
-          	<option value="3">Option 3</option>
+          	<option value="Medicine">Medicine</option>
+          	<option value="Nursing">Nursing</option>
+          	<option value="Social Work">Social Work</option>
+            <option value="Therapy">Therapy</option>
           </select>
           </div> 
 

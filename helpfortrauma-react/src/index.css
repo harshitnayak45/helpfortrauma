@@ -3,3 +3,7 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+.my-logout{width: auto;
+  padding: 5px 20px;
+  position: relative;
+  top: -44px;}

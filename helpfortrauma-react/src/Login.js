@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; 
 import ReactDOM from 'react-dom';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -10,6 +11,9 @@ import axios from 'axios';
 import AuthService from './AuthService';
 import withAuth from './withAuth';
 
+
+
+
 const Auth = new AuthService();
 const Url='http://localhost:3300';
 class Login extends Component {
@@ -18,12 +22,50 @@ class Login extends Component {
     super(props);
     this.state={
     	username:'',
-    	password:''
+    	password:'',
+       message: '',
+      fields: {},
+      errors: {}
     };
     this.LoginMe=this.LoginMe.bind(this);
   }
 
+  handleValidation(){
+        let fields = this.state.fields;
+        let errors = {};
+        let formIsValid = true;
+
+       
+        //Email
+        if(!fields["email"]){
+           formIsValid = false;
+           errors["email"] = "Cannot be empty";
+        }
+
+        if(typeof fields["email"] !== "undefined"){
+           let lastAtPos = fields["email"].lastIndexOf('@');
+           let lastDotPos = fields["email"].lastIndexOf('.');
+
+           if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields["email"].indexOf('@@') == -1 && lastDotPos > 2 && (fields["email"].length - lastDotPos) > 2)) {
+              formIsValid = false;
+              errors["email"] = "Email is not valid";
+            }
+       }  
+
+         if(!fields["pass"]){
+           formIsValid = false;
+           errors["pass"] = "Cannot be empty";
+        }
+
+       
+
+
+       this.setState({errors: errors});
+       return formIsValid;
+   }
+
   componentWillMount() {
+   
    if(Auth.loggedIn())
    this.props.history.replace('/Home');
   
@@ -34,12 +76,26 @@ class Login extends Component {
         Auth.login(this.refs.email.value,this.refs.pass.value)
             .then(res =>{
               console.log(res);
-               this.props.history.replace('/Home');
+              this.props.history.replace('/Home');
             })
             .catch(err =>{
                 alert(err);
             })
+
+             if(this.handleValidation()){
+               this.setState({ message: 'Form submitted' });
+          
+        }else{
+           this.setState({ message: 'Form has errors' });
+          
+        }
   }
+
+  handleChange(field, e){  
+        let fields = this.state.fields;
+        fields[field] = e.target.value;        
+        this.setState({fields});
+    }
   render() {
     return (
       <div>
@@ -54,6 +110,7 @@ class Login extends Component {
   </div>
 
     <div className="account-body">
+     <div className="result">{ this.state.message }</div>
 
       <h3 className="account-body-title">Welcome back to Target Admin.</h3>
 
@@ -63,13 +120,14 @@ class Login extends Component {
 
         <div className="form-group">
           <label htmlFor="login-username" className="placeholder-hidden">Username</label>
-          <input type="text" className="form-control" id="email" ref="email" placeholder="Email" tabIndex="1" />
-
+          <input type="text" className="form-control" ref="email" name="email" onChange={this.handleChange.bind(this, "email")} value={this.state.fields["email"]} placeholder="Email" tabIndex="1" />
+           <span style={{color: "red"}}>{this.state.errors["email"]}</span>
         </div>
 
         <div className="form-group">
           <label htmlFor="login-password" className="placeholder-hidden">Password</label>
-          <input type="password" className="form-control" id="pass" ref="pass" placeholder="Password" tabIndex="2" />
+          <input type="password" className="form-control" name="pass" id="pass" ref="pass" placeholder="Password" tabIndex="2" />
+          <span style={{color: "red"}}>{this.state.errors["pass"]}</span>
         </div> 
 
         <div className="form-group clearfix">

@@ -17,8 +17,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header/>
-        <Intro/>
+        <Header />
+        <Intro />
         <Footer />
       </div>
     );
@@ -26,27 +26,27 @@ class App extends Component {
 }
 
 
-class Number extends Component { 
-  componentDidMount(){
+class Number extends Component {
+  componentDidMount() {
     console.log("component did mount here");
 
   }
-  componentWillMount(){
+  componentWillMount() {
     console.log("component didqq mount here");
-    if(!Auth.loggedIn())
-    this.props.history.replace('/login');
+    if (!Auth.loggedIn())
+      this.props.history.replace('/login');
   }
-  componentWillReceiveProps(newProps){
+  componentWillReceiveProps(newProps) {
     console.log("component Will Receive props here");
   }
 
   render() {
     return (
       <div>
-      {this.props.myNumber}
-       
+        {this.props.myNumber}
+
       </div>
-      
+
     );
   }
 }
