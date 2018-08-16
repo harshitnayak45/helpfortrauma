@@ -1,228 +1,258 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+} from 'react-router-dom';
+
+import Register from './Register';
+import Login from './Login';
+import RegisterUser from './RegisterUser';
+import Home from './Home';
+import AuthService from './AuthService';
+import withAuth from './withAuth';
+const Url = 'http://localhost:3300';
+const Auth = new AuthService();
 
 
 
 class Header extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+
+  }
+
+  handleLogout() {
+    Auth.logout()
+    this.props.history.replace('/login');
+  }
+
   render() {
     return (
       <div>
-      <header className="App-header">
-         
-      <div className="navbar">
+        <header className="App-header">
 
-  <div className="container">
+          <div className="navbar">
 
-    <div className="navbar-header">
+            <div className="container">
 
-      <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <i className="fa fa-cogs"></i>
-      </button>
+              <div className="navbar-header">
 
-      <a className="navbar-brand navbar-brand-image" href="./index.html">
-     
-      </a>
+                <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <i className="fa fa-cogs"></i>
+                </button>
 
-    </div> 
+                <a className="navbar-brand navbar-brand-image" href="./index.html">
 
-    <div className="navbar-collapse collapse">
+                </a>
 
-      
-
-      <ul className="nav navbar-nav noticebar navbar-left">
-
-        <li className="dropdown">
-          <a href="./page-notifications.html" className="dropdown-toggle" data-toggle="dropdown">
-            <i className="fa fa-bell"></i>
-            <span className="navbar-visible-collapsed">&nbsp;Notifications&nbsp;</span>
-            <span className="badge">3</span>
-          </a>
-
-          <ul className="dropdown-menu noticebar-menu" role="menu">
-            <li className="nav-header">
-              <div className="pull-left">
-                Notifications
               </div>
 
-              <div className="pull-right">
-                <a href="href-no-hash">Mark as Read</a>
-              </div>
-            </li>
-
-            <li>
-              <a href="./page-notifications.html" className="noticebar-item">
-                <span className="noticebar-item-image">
-                  <i className="fa fa-cloud-upload text-success"></i>
-                </span>
-                <span className="noticebar-item-body">
-                  <strong className="noticebar-item-title">Templates Synced</strong>
-                  <span className="noticebar-item-text">20 Templates have been synced to the Mashon Demo instance.</span>
-                  <span className="noticebar-item-time"><i className="fa fa-clock-o"></i> 12 minutes ago</span>
-                </span>
-              </a>
-            </li>
-
-            <li>
-              <a href="./page-notifications.html" className="noticebar-item">
-                <span className="noticebar-item-image">
-                  <i className="fa fa-ban text-danger"></i>
-                </span>
-                <span className="noticebar-item-body">
-                  <strong className="noticebar-item-title">Sync Error</strong>
-                  <span className="noticebar-item-text">5 Designs have been failed to be synced to the Mashon Demo instance.</span>
-                  <span className="noticebar-item-time"><i className="fa fa-clock-o"></i> 20 minutes ago</span>
-                </span>
-              </a>
-            </li>
-
-            <li className="noticebar-menu-view-all">
-              <a href="./page-notifications.html">View All Notifications</a>
-            </li>
-          </ul>
-        </li>
+              <div className="navbar-collapse collapse">
 
 
-        <li className="dropdown">
-          <a href="./page-notifications.html" className="dropdown-toggle" data-toggle="dropdown">
-            <i className="fa fa-envelope"></i>
-            <span className="navbar-visible-collapsed">&nbsp;Messages&nbsp;</span>
-          </a>
 
-          <ul className="dropdown-menu noticebar-menu" role="menu">                
-            <li className="nav-header">
-              <div className="pull-left">
-                Messages
+                <ul className="nav navbar-nav noticebar navbar-left">
+
+                  <li className="dropdown">
+                    <a href="./page-notifications.html" className="dropdown-toggle" data-toggle="dropdown">
+                      <i className="fa fa-bell"></i>
+                      <span className="navbar-visible-collapsed">&nbsp;Notifications&nbsp;</span>
+                      <span className="badge">3</span>
+                    </a>
+
+                    <ul className="dropdown-menu noticebar-menu" role="menu">
+                      <li className="nav-header">
+                        <div className="pull-left">
+                          Notifications
               </div>
 
-              <div className="pull-right">
-                <a href="href-no-hash">New Message</a>
+                        <div className="pull-right">
+                          <a href="href-no-hash">Mark as Read</a>
+                        </div>
+                      </li>
+
+                      <li>
+                        <a href="./page-notifications.html" className="noticebar-item">
+                          <span className="noticebar-item-image">
+                            <i className="fa fa-cloud-upload text-success"></i>
+                          </span>
+                          <span className="noticebar-item-body">
+                            <strong className="noticebar-item-title">Templates Synced</strong>
+                            <span className="noticebar-item-text">20 Templates have been synced to the Mashon Demo instance.</span>
+                            <span className="noticebar-item-time"><i className="fa fa-clock-o"></i> 12 minutes ago</span>
+                          </span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <a href="./page-notifications.html" className="noticebar-item">
+                          <span className="noticebar-item-image">
+                            <i className="fa fa-ban text-danger"></i>
+                          </span>
+                          <span className="noticebar-item-body">
+                            <strong className="noticebar-item-title">Sync Error</strong>
+                            <span className="noticebar-item-text">5 Designs have been failed to be synced to the Mashon Demo instance.</span>
+                            <span className="noticebar-item-time"><i className="fa fa-clock-o"></i> 20 minutes ago</span>
+                          </span>
+                        </a>
+                      </li>
+
+                      <li className="noticebar-menu-view-all">
+                        <a href="./page-notifications.html">View All Notifications</a>
+                      </li>
+                    </ul>
+                  </li>
+
+
+                  <li className="dropdown">
+                    <a href="./page-notifications.html" className="dropdown-toggle" data-toggle="dropdown">
+                      <i className="fa fa-envelope"></i>
+                      <span className="navbar-visible-collapsed">&nbsp;Messages&nbsp;</span>
+                    </a>
+
+                    <ul className="dropdown-menu noticebar-menu" role="menu">
+                      <li className="nav-header">
+                        <div className="pull-left">
+                          Messages
               </div>
-            </li>
 
-            <li>
-              <a href="./page-notifications.html" className="noticebar-item">
-                <span className="noticebar-item-image">
-                
-                </span>
+                        <div className="pull-right">
+                          <a href="href-no-hash">New Message</a>
+                        </div>
+                      </li>
 
-                <span className="noticebar-item-body">
-                  <strong className="noticebar-item-title">New Message</strong>
-                  <span className="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-                  <span className="noticebar-item-time"><i className="fa fa-clock-o"></i> 20 minutes ago</span>
-                </span>
-              </a>
-            </li>
+                      <li>
+                        <a href="./page-notifications.html" className="noticebar-item">
+                          <span className="noticebar-item-image">
 
-            <li>
-              <a href="./page-notifications.html" className="noticebar-item">
-                <span className="noticebar-item-image">
-                 
-                </span>
+                          </span>
 
-                <span className="noticebar-item-body">
-                  <strong className="noticebar-item-title">New Message</strong>
-                  <span className="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-                  <span className="noticebar-item-time"><i className="fa fa-clock-o"></i> 5 hours ago</span>
-                </span>
-              </a>
-            </li>
+                          <span className="noticebar-item-body">
+                            <strong className="noticebar-item-title">New Message</strong>
+                            <span className="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
+                            <span className="noticebar-item-time"><i className="fa fa-clock-o"></i> 20 minutes ago</span>
+                          </span>
+                        </a>
+                      </li>
 
-            <li className="noticebar-menu-view-all">
-              <a href="./page-notifications.html">View All Messages</a>
-            </li>
-          </ul>
-        </li>
+                      <li>
+                        <a href="./page-notifications.html" className="noticebar-item">
+                          <span className="noticebar-item-image">
+
+                          </span>
+
+                          <span className="noticebar-item-body">
+                            <strong className="noticebar-item-title">New Message</strong>
+                            <span className="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
+                            <span className="noticebar-item-time"><i className="fa fa-clock-o"></i> 5 hours ago</span>
+                          </span>
+                        </a>
+                      </li>
+
+                      <li className="noticebar-menu-view-all">
+                        <a href="./page-notifications.html">View All Messages</a>
+                      </li>
+                    </ul>
+                  </li>
 
 
-        <li className="dropdown">
-          <a href="href-no-hash" className="dropdown-toggle" data-toggle="dropdown">
-            <i className="fa fa-exclamation-triangle"></i>
-            <span className="navbar-visible-collapsed">&nbsp;Alerts&nbsp;</span>
-          </a>
+                  <li className="dropdown">
+                    <a href="href-no-hash" className="dropdown-toggle" data-toggle="dropdown">
+                      <i className="fa fa-exclamation-triangle"></i>
+                      <span className="navbar-visible-collapsed">&nbsp;Alerts&nbsp;</span>
+                    </a>
 
-          <ul className="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">                
-            <li className="nav-header">
-              <div className="pull-left">
-                Alerts
+                    <ul className="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">
+                      <li className="nav-header">
+                        <div className="pull-left">
+                          Alerts
               </div>
-            </li>
+                      </li>
 
-            <li className="noticebar-empty">                  
-              <h4 className="noticebar-empty-title">No alerts here.</h4>
-              <p className="noticebar-empty-text">Check out what other makers are doing on Explore!</p>                
-            </li>
-          </ul>
-        </li>
+                      <li className="noticebar-empty">
+                        <h4 className="noticebar-empty-title">No alerts here.</h4>
+                        <p className="noticebar-empty-text">Check out what other makers are doing on Explore!</p>
+                      </li>
+                    </ul>
+                  </li>
 
-      </ul>
+                </ul>
 
-      <ul className="nav navbar-nav navbar-right">   
+                <ul className="nav navbar-nav navbar-right">
 
-        <li>
-          <a href="href-no-hash">About</a>
-        </li>    
-          
-        <li>
-          <a href="href-no-hash">Resources</a>
-        </li>    
+                  <li>
+                    <a href="href-no-hash">About</a>
+                  </li>
 
-        <li className="dropdown navbar-profile">
-          <a className="dropdown-toggle" data-toggle="dropdown" href="href-no-hash">
-            <img src="./img/avatars/avatar-1-xs.jpg" className="navbar-profile-avatar" alt="" />
-            <span className="navbar-profile-label">rod@rod.me &nbsp;</span>
-            <i className="fa fa-caret-down"></i>
-          </a>
+                  <li>
+                    <a href="href-no-hash">Resources</a>
+                  </li>
 
-          <ul className="dropdown-menu" role="menu">
+                  <li className="dropdown navbar-profile">
+                    <a className="dropdown-toggle" data-toggle="dropdown" href="href-no-hash">
+                      <img src="./img/avatars/avatar-1-xs.jpg" className="navbar-profile-avatar" alt="" />
+                      <span className="navbar-profile-label">rod@rod.me &nbsp;</span>
+                      <i className="fa fa-caret-down"></i>
+                    </a>
 
-            <li>
-              <a href="./page-profile.html">
-                <i className="fa fa-user"></i> 
-                &nbsp;&nbsp;My Profile
+                    <ul className="dropdown-menu" role="menu">
+
+                      <li>
+                        <a href="./page-profile.html">
+                          <i className="fa fa-user"></i>
+                          &nbsp;&nbsp;My Profile
               </a>
-            </li>
+                      </li>
 
-            <li>
-              <a href="./page-pricing.html">
-                <i className="fa fa-dollar"></i> 
-                &nbsp;&nbsp;Plans &amp; Billing
+                      <li>
+                        <a href="./page-pricing.html">
+                          <i className="fa fa-dollar"></i>
+                          &nbsp;&nbsp;Plans &amp; Billing
               </a>
-            </li>
+                      </li>
 
-            <li>
-              <a href="./page-settings.html">
-                <i className="fa fa-cogs"></i> 
-                &nbsp;&nbsp;Settings
+                      <li>
+                        <a href="./page-settings.html">
+                          <i className="fa fa-cogs"></i>
+                          &nbsp;&nbsp;Settings
               </a>
-            </li>
+                      </li>
 
-            <li className="divider"></li>
+                      <li className="divider"></li>
 
-            <li>
-              <a href="./account-login.html">
-                <i className="fa fa-sign-out"></i> 
-                &nbsp;&nbsp;Logout
+                      <li>
+                        <a href="" onClick={this.handleLogout.bind(this)}>
+                          <i className="fa fa-sign-out"></i>
+                          &nbsp;&nbsp;Logout
               </a>
-            </li>
 
-          </ul>
+                      </li>
 
-        </li>
+                    </ul>
 
-      </ul>
+                  </li>
 
-       
-
+                </ul>
 
 
-       
 
-    </div> 
 
-  </div> 
 
-</div> 
+
+
+              </div>
+
+            </div>
+
+          </div>
         </header>
-       
+
       </div>
     );
   }

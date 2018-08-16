@@ -30,10 +30,7 @@ class Home extends Component {
 
 
 
-  handleLogout() {
-    Auth.logout()
-    this.props.history.replace('/login');
-  }
+
 
   render() {
     return (
@@ -43,8 +40,7 @@ class Home extends Component {
 
         <div className="col-md-12">
           <h1>Home</h1>
-          <button type="button" className="btn btn-secondary my-logout btn-block pull-right" onClick={this.handleLogout.bind(this)}>Logout</button>
-        </div>
+             </div>
 
         <div className="col-md-12">
 
