@@ -85,7 +85,7 @@ function _setReqData(req) {
 }
 
 function _setPass(req, user) {
-    let hash = bcrypt.hashSync(req.body.pass, 10);
+    let hash = bcrypt.hashSync(req.body.pass);
     const reqObj = {
         pass: hash,
         usrId: user._id,
