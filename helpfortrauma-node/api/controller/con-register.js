@@ -1,6 +1,6 @@
 const Register = require('../model/user-info.vo');
 const Password = require('../model/user-pass.vo');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-nodejs');
 
 /* *******************************User Registration************************************* */
 exports.addUpdateUser = (req, res, next) => {
