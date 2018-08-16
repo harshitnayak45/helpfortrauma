@@ -91,10 +91,12 @@ function _setPass(req, user) {
         usrId: user._id,
         created: new Date()
     }
+    console.log('xxx xxxxxxxxx xxxxx password' + reqObj);
     return reqObj;
 }
 
 function _savePass(reqPass, res) {
+    console.log('xxx xxxxxxxxx xxxxx password' + reqPass);
     const pass = new Password(reqPass);
     pass.save()
         .then(data => {
