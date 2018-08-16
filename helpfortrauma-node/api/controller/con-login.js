@@ -12,7 +12,6 @@ exports.authenticate = (req, res, next) => {
                 Password.findOne({ usrId: data._id })
                     .then(passData => {
                         let isPassMatch = bcrypt.compareSync(req.body.pass, passData.pass);
-                        console.log(isPassMatch)                        ;
                         if (isPassMatch) {
                             const token = _getToken(data);
                             res.status(201).json({
